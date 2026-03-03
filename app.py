@@ -2,27 +2,48 @@ import streamlit as st
 import pickle
 import numpy as np
 
-st.title("💳 Credit Card Fraud Detection")
+st.set_page_config(page_title="Credit Card Fraud Detection")
 
-model = pickle.load(open("credit_card_model.pkl", "rb"))
+st.title("💳 Credit Card Fraud Detection")
+st.write("Enter transaction details to check fraud probability")
+
+# ==============================
+# LOAD MODEL
+# ==============================
+
+model = pickle.load(open("model.pkl", "rb"))
 
 features = []
 
-time = st.number_input("Time")
+# Time
+time = st.number_input("Time", value=0.0)
 features.append(time)
 
+# V1 to V28
 for i in range(1, 29):
-    value = st.number_input(f"V{i}")
+    value = st.number_input(f"V{i}", value=0.0)
     features.append(value)
 
-amount = st.number_input("Amount")
+# Amount
+amount = st.number_input("Amount", value=0.0)
 features.append(amount)
 
+# ==============================
+# PREDICT BUTTON
+# ==============================
+
 if st.button("Predict"):
+
     input_data = np.array([features])
+
     prediction = model.predict(input_data)
+    probability = model.predict_proba(input_data)[0][1]
+
+    st.subheader("Result:")
 
     if prediction[0] == 1:
         st.error("🚨 Fraud Transaction")
     else:
         st.success("✅ Genuine Transaction")
+
+    st.write(f"Fraud Probability: {probability:.2%}")
