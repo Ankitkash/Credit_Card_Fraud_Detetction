@@ -4,7 +4,7 @@ import numpy as np
 
 st.title("💳 Credit Card Fraud Detection")
 
-model = pickle.load(open("model.pkl", "rb"))
+model = pickle.load(open("credit_card_model.pkl", "rb"))
 
 features = []
 
