@@ -11,7 +11,7 @@ st.write("Enter transaction details to check fraud probability")
 # LOAD MODEL
 # ==============================
 
-model = pickle.load(open("model.pkl", "rb"))
+model = pickle.load(open("credit_card_fraud_detection_model.pkl", "rb"))
 
 features = []
 
